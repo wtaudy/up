@@ -1,0 +1,82 @@
+package main.java;
+
+import java.io.UnsupportedEncodingException;
+import java.lang.management.ManagementFactory;
+import java.lang.management.ThreadInfo;
+import java.lang.management.ThreadMXBean;
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Random;
+
+/**
+ * @author lhl
+ *
+ */
+public class TestMain {
+	public static String randomString(int i) {
+		Random ran = new Random(i);
+		StringBuilder sb = new StringBuilder();
+		while (true) {
+			int k = ran.nextInt(27);
+			if (k == 0)
+				break;
+			sb.append((char) ('`' + k));
+		}
+		return sb.toString();
+	}
+public static void main(String[] args) {
+	
+	String sss = "你好";
+	ClassLoader classLoader = String.class.getClassLoader();
+	
+	System.out.println(String.class);
+	System.out.println(String.class.getName());
+	System.out.println(sss.getClass().getName());
+	System.out.println(TestMain.class);
+	Integer i1 = 1;
+	Double.parseDouble(i1.toString());
+	
+	System.out.println(randomString(-229985452) + " " + randomString(-147909649));
+
+	
+	ThreadLocal th = new ThreadLocal<>();
+	
+	System.out.println(Runtime.getRuntime().totalMemory());
+	System.out.println(Runtime.getRuntime().maxMemory());
+	HashSet ss = new HashSet<>(new ArrayList<>());	
+	
+	ThreadMXBean threadMBean = ManagementFactory.getThreadMXBean();
+	ThreadInfo[] dumpAllThreads = threadMBean.dumpAllThreads(false, false);
+	System.out.println(dumpAllThreads[0].getThreadName());
+	String string = "0000111";
+	String string2 = string.replaceFirst("^0*", "");
+	System.out.println(string2);
+	
+	
+	try {
+		byte[] bs = sss.getBytes("UTF-8");
+		byte[] bs2 = sss.getBytes("UNICODE");
+		
+		
+		Charset cs = Charset.forName("UNICODE");
+		ByteBuffer encode = cs.encode(sss);
+		
+		System.out.println(bs);
+		System.out.println(bs2);
+	} catch (UnsupportedEncodingException e) {
+		e.printStackTrace();
+	}
+	
+	
+	for (int i = 0; i < 100000; i++) {  
+	      ByteBuffer.allocateDirect(128);  
+	    }  
+	
+	
+}
+
+
+
+}
